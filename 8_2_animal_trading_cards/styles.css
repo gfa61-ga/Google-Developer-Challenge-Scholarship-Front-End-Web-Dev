@@ -1,9 +1,9 @@
 #animal_card{
   width: 300px;
+  padding: 0 10px 10px 10px;
   border: 1px solid #dedede;
   border-radius: 10px;
   box-shadow: 5px 5px 15px  #bf9d79;
-  padding: 0 10px 10px 10px;
   background-color: #b7ccd8;
 }
 
@@ -18,9 +18,9 @@
 #animal_information{
   padding: 0px 10px 10px 10px;
   border: 1px solid #dedede;
+  border-radius: 10px;
   font-size: 0.7em;
   background-color: #f7dfc0;
-  border-radius: 10px;
 }
 
 #interesting_fact {
