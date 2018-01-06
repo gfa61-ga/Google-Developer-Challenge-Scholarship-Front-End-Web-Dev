@@ -18,14 +18,8 @@ function makeGrid() {
 
 function addListeners() {
     $('#sizePicker').submit(function(submitEvent) {
-        const pageWidth = $('body').width();    // get the current page width
-        const pixelWidth = 20;
-        const maxGridWidth = parseInt(pageWidth/pixelWidth);
-
-        widthInput.attr('max', maxGridWidth);    // set the currently allowed max grid width
-
         submitEvent.preventDefault();   // prevent default submit action, which reloads the html page
-        makeGrid();    // redesign grid when new dimensions are submitted
+        makeGrid();     // redesign grid when new dimensions are submitted
     });
 
     colorPicker.change(function() {
@@ -40,6 +34,14 @@ function addListeners() {
         } else {
             eventTarget.css('background', '#ffffff');    // or unpaint the pixel on doubleclick
         }
+    });
+
+    widthInput.click(function() {
+        const pageWidth = $('body').width();    // get the current page width
+        const pixelWidth = 20;
+        const maxGridWidth = parseInt(pageWidth/pixelWidth);
+
+        widthInput.attr('max', maxGridWidth);    // set the currently allowed max grid width
     });
 }
 
