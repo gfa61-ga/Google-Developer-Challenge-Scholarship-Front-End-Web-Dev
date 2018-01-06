@@ -36,7 +36,7 @@ function addListeners() {
         }
     });
 
-    widthInput.click(function() {
+    widthInput.focus(function() {
         const pageWidth = $('body').width();    // get the current page width
         const pixelWidth = 20;
         const maxGridWidth = parseInt(pageWidth/pixelWidth);
