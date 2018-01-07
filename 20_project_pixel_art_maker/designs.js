@@ -1,3 +1,12 @@
+/*
+****    Pixel Art Maker project with extra features:
+*
+*           1. erase pixel color on doubleclick
+*           2. hold down the mouse button for continuous drawing
+*           3. set max allowed camvas width for the current page length
+*
+*/
+
 function makeGrid() {
     const gridHeight = $('#input_height').val();
     const gridWidth = widthInput.val();
@@ -26,20 +35,27 @@ function addListeners() {
         pickedColor = colorPicker.val();    // update color value, when it is changed
     });
 
-    canvasGrid.on('mousedown dblclick', function(pixelEvent) {
+    canvasGrid.on('mousedown mouseup mousemove dblclick', 'td', function(pixelEvent) {
         const eventTarget = $(pixelEvent.target);    // 'eventTarget' is the pixel to be painted
 
-        if (pixelEvent.type === 'mousedown') {
-            eventTarget.css('background', pickedColor);    // paint the pixel on mousedown
-        } else {
-            eventTarget.css('background', '#ffffff');    // or unpaint the pixel on doubleclick
+        if (pixelEvent.type === 'mousedown') {    //  update mouse status
+            mouseDown = true;
+        } else if (pixelEvent.type === 'mouseup') {
+            mouseDown = false;
+        } else if (pixelEvent.type === 'dblclick') {
+            eventTarget.css('background', '#ffffff');    //  unpaint the pixel on doubleclick
+        }
+
+        // paint the pixel on mousedown event  OR  on continuous mouseDown AND mousemove event
+        if (pixelEvent.type === 'mousedown' || mouseDown && pixelEvent.type === 'mousemove') {
+            eventTarget.css('background', pickedColor);
         }
     });
 
-    widthInput.click(function() {
+    widthInput.on('click input', function() {    // listen for mouse or keyboard input
         const pageWidth = $('body').width();    // get the current page width
         const pixelWidth = 20;
-        const maxGridWidth = parseInt(pageWidth/pixelWidth);
+        const maxGridWidth = parseInt(pageWidth / pixelWidth);
 
         widthInput.attr('max', maxGridWidth);    // set the currently allowed max grid width
     });
@@ -49,5 +65,5 @@ const widthInput = $('#input_width');
 const colorPicker = $('#colorPicker');
 const canvasGrid = $('#pixel_canvas');
 let pickedColor = colorPicker.val(); //'pickedColor' is global, to be available to multiple listeners
-
+let mouseDown = false;    //  'mouseDown' is global, to be available to multiple listeners
 addListeners();    // add listeners on page startup
