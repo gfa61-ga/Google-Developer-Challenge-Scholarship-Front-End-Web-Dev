@@ -31,24 +31,25 @@ function addListeners() {
         makeGrid();     // redesign grid when new dimensions are submitted
     });
 
-    colorPicker.change(function() {
-        pickedColor = colorPicker.val();    // update color value, when it is changed
-    });
-
-    canvasGrid.on('mousedown mouseup mousemove dblclick', 'td', function(pixelEvent) {
+    canvasGrid.on('mousedown click mousemove dblclick', 'td', function(pixelEvent) {
         const eventTarget = $(pixelEvent.target);    // 'eventTarget' is the pixel to be painted
+        const pickedColor = colorPicker.val();    // update color value
 
-        if (pixelEvent.type === 'mousedown') {    //  update mouse status
-            mouseDown = true;
-        } else if (pixelEvent.type === 'mouseup') {
-            mouseDown = false;
-        } else if (pixelEvent.type === 'dblclick') {
-            eventTarget.css('background', '#ffffff');    //  unpaint the pixel on doubleclick
-        }
-
-        // paint the pixel on mousedown event  OR  on continuous mouseDown AND mousemove event
-        if (pixelEvent.type === 'mousedown' || mouseDown && pixelEvent.type === 'mousemove') {
-            eventTarget.css('background', pickedColor);
+        switch (pixelEvent.type) {
+            case 'mousedown':
+                continuousDrag = true;    // set continuous drag
+                pixelEvent.preventDefault();    // prevent default mousedown dragging behavior
+                break;
+            case 'dblclick':
+                eventTarget.css('background', '#ffffff');    // unpaint the pixel on doubleclick
+                break;
+            // paint the pixel on continuousDrag state AND mousemove event OR on click event
+            case 'mousemove':
+                if (!continuousDrag) {
+                    break;
+                }
+            case 'click':
+                eventTarget.css('background', pickedColor);
         }
     });
 
@@ -59,11 +60,16 @@ function addListeners() {
 
         widthInput.attr('max', maxGridWidth);    // set the currently allowed max grid width
     });
+
+    canvasGrid.on('mouseup mouseleave', function () {    // cancel continuous drag
+      continuousDrag = false;
+   });
 }
 
 const widthInput = $('#input_width');
 const colorPicker = $('#colorPicker');
 const canvasGrid = $('#pixel_canvas');
-let pickedColor = colorPicker.val(); //'pickedColor' is global, to be available to multiple listeners
-let mouseDown = false;    //  'mouseDown' is global, to be available to multiple listeners
+
+let continuousDrag = false;    //  'continuousDrag' is global, to be available to multiple listeners
+
 addListeners();    // add listeners on page startup
