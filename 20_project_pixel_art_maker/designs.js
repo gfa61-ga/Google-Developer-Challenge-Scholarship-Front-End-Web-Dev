@@ -1,3 +1,11 @@
+/*
+****    Pixel Art Maker project with extra features:
+*
+*           1. erase pixel color on doubleclick
+*           2. set max allowed camvas width for the current page length
+*
+*/
+
 function makeGrid() {
     const gridHeight = $('#input_height').val();
     const gridWidth = widthInput.val();
@@ -39,7 +47,7 @@ function addListeners() {
         widthInput.on('click input', function() {    // listen for mouse or keyboard input
         const pageWidth = $('body').width();    // get the current page width
         const pixelWidth = 20;
-        const maxGridWidth = parseInt(pageWidth/pixelWidth);
+        const maxGridWidth = parseInt(pageWidth / pixelWidth);
 
         widthInput.attr('max', maxGridWidth);    // set the currently allowed max grid width
     });
