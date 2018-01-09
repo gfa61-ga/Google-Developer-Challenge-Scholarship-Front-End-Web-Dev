@@ -9,31 +9,30 @@
 
 function makeGrid() {
     const gridHeight = $('#input_height').val();
-    const gridWidth = widthInput.val();
+    const gridWidth = inputWidth.val();
 
     canvasGrid.text('');    // erase previous canvas
 
-    let gridHtmlString = '';
-    for (let row = 1; row <= gridHeight; row++) {    // for each row
-        gridHtmlString += '<tr>';    // add the beginning of row
-        for (let column = 1; column <= gridWidth; column++) {
-            gridHtmlString += '<td></td>';    // add each column
+    const canvasTable = canvasGrid.get(0);    // get() function returns the DOM <table> element
+    for (let row = 0; row < gridHeight; row++) {
+        const newRow = canvasTable.insertRow(row);    // insert newRows in canvasTable
+        for (let column = 0; column < gridWidth; column++) {
+            newRow.insertCell(column);    // insert newCells in each newRow
         }
-        gridHtmlString += '</tr>';    // and finally add the end of row
     }
-
-    canvasGrid.html(gridHtmlString);    // design new canvas
 }
 
 function addListeners() {
+    /**** sizePicker-form listener ****/
     $('#sizePicker').submit(function(submitEvent) {
         submitEvent.preventDefault();   // prevent default submit action, which reloads the html page
         makeGrid();     // redesign grid when new dimensions are submitted
     });
 
+    /**** canvasGrid-pixels listener ****/
     canvasGrid.on('mousedown click mousemove dblclick', 'td', function(pixelEvent) {
         const eventTarget = $(pixelEvent.target);    // 'eventTarget' is the pixel to be painted
-        const pickedColor = colorPicker.val();    // update color value
+        const colorPicker = $('#colorPicker');    // update color value
 
         switch (pixelEvent.type) {
             case 'mousedown':
@@ -49,25 +48,27 @@ function addListeners() {
                     break;
                 }
             case 'click':
-                eventTarget.css('background', pickedColor);
+                eventTarget.css('background', colorPicker.val());
         }
     });
 
-    widthInput.on('click input', function() {    // listen for mouse or keyboard input
+    /**** canvasGrid listener ****/
+    canvasGrid.on('mouseup mouseleave', function () {    // cancel continuous drag
+      continuousDrag = false;
+   });
+
+    /**** inputWidth listener ****/
+    inputWidth.on('click input', function() {    // listen for mouse or keyboard width-input
         const pageWidth = $('body').width();    // get the current page width
         const pixelWidth = 20;
         const maxGridWidth = parseInt(pageWidth / pixelWidth);
 
-        widthInput.attr('max', maxGridWidth);    // set the currently allowed max grid width
+        inputWidth.attr('max', maxGridWidth);    // set the currently allowed max grid width
     });
 
-    canvasGrid.on('mouseup mouseleave', function () {    // cancel continuous drag
-      continuousDrag = false;
-   });
 }
 
-const widthInput = $('#input_width');
-const colorPicker = $('#colorPicker');
+const inputWidth = $('#input_width');
 const canvasGrid = $('#pixel_canvas');
 
 let continuousDrag = false;    //  'continuousDrag' is global, to be available to multiple listeners
