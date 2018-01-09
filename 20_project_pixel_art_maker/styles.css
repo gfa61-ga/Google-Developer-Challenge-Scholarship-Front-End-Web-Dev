@@ -36,6 +36,11 @@ td {
     border-radius: 10px;
 }
 
+td:hover {
+  border-color: #ffccdd;
+  border-style: double;
+}
+
 input[type=number] {
     width: 6em;
 }
