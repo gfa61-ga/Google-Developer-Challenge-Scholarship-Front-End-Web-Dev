@@ -3,12 +3,12 @@
 *
 *           1. erase pixel color on doubleclick
 *           2. hold down the mouse button for continuous drawing
-*           3. set max allowed camvas width for the current page length
+*           3. set max allowed camvas width and height according to the current page length
 *
 */
 
 function makeGrid() {
-    const gridHeight = $('#input_height').val();
+    const gridHeight = inputHeight.val();
     const gridWidth = inputWidth.val();
 
     canvasGrid.text('');    // erase previous canvas
@@ -24,23 +24,22 @@ function makeGrid() {
 
 function addListeners() {
     /**** sizePicker-form listener ****/
-    $('#sizePicker').submit(function(submitEvent) {
+    sizePicker.submit(function(submitEvent) {
         submitEvent.preventDefault();   // prevent default submit action, which reloads the html page
         makeGrid();     // redesign grid when new dimensions are submitted
     });
 
     /**** canvasGrid-pixels listener ****/
     canvasGrid.on('mousedown click mousemove dblclick', 'td', function(pixelEvent) {
-        const eventTarget = $(pixelEvent.target);    // 'eventTarget' is the pixel to be painted
-        const colorPicker = $('#colorPicker');    // update color value
+        const eventTarget = pixelEvent.target;    // 'eventTarget' is the pixel to be painted
 
         switch (pixelEvent.type) {
             case 'mousedown':
-                continuousDrag = true;    // set continuous drag
+                continuousDrag = true;    // set continuous dragging
                 pixelEvent.preventDefault();    // prevent default mousedown dragging behavior
                 break;
             case 'dblclick':
-                eventTarget.css('background', '#ffffff');    // unpaint the pixel on doubleclick
+                eventTarget.style.backgroundColor = '#ffffff';    // unpaint the pixel on doubleclick
                 break;
             // paint the pixel on continuousDrag state AND mousemove event OR on click event
             case 'mousemove':
@@ -48,27 +47,31 @@ function addListeners() {
                     break;
                 }
             case 'click':
-                eventTarget.css('background', colorPicker.val());
+                eventTarget.style.backgroundColor = colorPicker.val();
         }
     });
 
     /**** canvasGrid listener ****/
-    canvasGrid.on('mouseup mouseleave', function () {    // cancel continuous drag
+    canvasGrid.on('mouseup mouseleave', function () {    // cancel continuous dragging
       continuousDrag = false;
    });
 
-    /**** inputWidth listener ****/
-    inputWidth.on('click input', function() {    // listen for mouse or keyboard width-input
+    /**** sizePicker-focus listener ****/
+    sizePicker.on('pointerenter keyup', function() {    // listen for mouse or keyboard focus
         const pageWidth = $('body').width();    // get the current page width
         const pixelWidth = 20;
         const maxGridWidth = parseInt(pageWidth / pixelWidth);
+        const maxGridHeight = parseInt(maxGridWidth * 1.414);    // 1.414 is A4-paper aspect-ratio
 
         inputWidth.attr('max', maxGridWidth);    // set the currently allowed max grid width
+        inputHeight.attr('max', maxGridHeight);    // and max grid height
     });
-
 }
 
+const sizePicker = $('#sizePicker');
 const inputWidth = $('#input_width');
+const inputHeight = $('#input_height');
+const colorPicker = $('#colorPicker');
 const canvasGrid = $('#pixel_canvas');
 
 let continuousDrag = false;    //  'continuousDrag' is global, to be available to multiple listeners
