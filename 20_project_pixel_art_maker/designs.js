@@ -30,7 +30,7 @@ function addListeners() {
     });
 
     /**** canvasGrid-pixels listener ****/
-    canvasGrid.on('mousedown click mousemove dblclick', 'td', function(pixelEvent) {
+    canvasGrid.on('mousedown mousemove click dblclick', 'td', function(pixelEvent) {
         const eventTarget = pixelEvent.target;    // 'eventTarget' is the pixel to be painted
 
         switch (pixelEvent.type) {
@@ -38,27 +38,26 @@ function addListeners() {
                 continuousDrag = true;    // set continuous dragging
                 pixelEvent.preventDefault();    // prevent default mousedown dragging behavior
                 break;
-            case 'dblclick':
-                eventTarget.style.backgroundColor = '#ffffff';    // unpaint the pixel on doubleclick
-                break;
-            // paint the pixel on continuousDrag state AND mousemove event OR on click event
-            case 'mousemove':
+            case 'mousemove':    // paint the pixel on continuousDrag state AND mousemove event OR on click event
                 if (!continuousDrag) {
                     break;
                 }
             case 'click':
                 eventTarget.style.backgroundColor = colorPicker.val();
+                break;
+            case 'dblclick':
+                eventTarget.style.backgroundColor = '#ffffff';    // unpaint the pixel on doubleclick
         }
     });
 
     /**** canvasGrid listener ****/
     canvasGrid.on('mouseup mouseleave', function () {    // cancel continuous dragging
-      continuousDrag = false;
-   });
+        continuousDrag = false;
+    });
 
     /**** sizePicker-focus listener ****/
-    sizePicker.on('pointerenter keyup', function() {    // listen for mouse or keyboard focus
-        const pageWidth = $('body').width();    // get the current page width
+    sizePicker.on('pointerenter keyup', function() {    // listen for mouse or keyboard focus on sizePicker form
+        const pageWidth = pageBody.width();    // get the current page width
         const pixelWidth = 20;
         const maxGridWidth = parseInt(pageWidth / pixelWidth);
         const maxGridHeight = parseInt(maxGridWidth * 1.414);    // 1.414 is A4-paper aspect-ratio
@@ -68,6 +67,7 @@ function addListeners() {
     });
 }
 
+const pageBody = $('body');
 const sizePicker = $('#sizePicker');
 const inputWidth = $('#input_width');
 const inputHeight = $('#input_height');
