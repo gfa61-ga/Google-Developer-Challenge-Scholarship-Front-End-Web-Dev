@@ -1,9 +1,9 @@
 body {
+    font-family: 'Cabin Sketch', cursive;
     text-align: center;
 }
 
 h1 {
-    font-family: Monoton;
     font-size: 70px;
     margin: 0.2em;
 }
@@ -37,12 +37,18 @@ td {
 }
 
 td:hover {
-  border-color: #ffccdd;
-  border-style: double;
+    border-color: #ffccdd;
+    border-style: double;
 }
 
 input[type=number] {
+    font-family : inherit;
+    text-align: center;
     width: 6em;
+}
+
+input[type=submit] {
+    font-family : inherit;
 }
 
 input:invalid {

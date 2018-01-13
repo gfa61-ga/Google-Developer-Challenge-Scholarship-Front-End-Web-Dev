@@ -10,8 +10,11 @@
 function makeGrid() {
     const gridHeight = inputHeight.val();
     const gridWidth = inputWidth.val();
+    const helpTextHtml = '<p>Click or Drag to paint</p>' +
+        '<p>Double Click to erase color</p>';
 
     canvasGrid.text('');    // erase previous canvas
+    helpTextArea.text('');    // erase helpText
 
     const canvasTable = canvasGrid.get(0);    // get() function returns the DOM <table> element
     for (let row = 0; row < gridHeight; row++) {
@@ -20,6 +23,8 @@ function makeGrid() {
             newRow.insertCell(column);    // insert newCells in each newRow
         }
     }
+
+    helpTextArea.append(helpTextHtml);    // append helpText
 }
 
 function addListeners() {
@@ -58,6 +63,7 @@ function addListeners() {
     /**** sizePicker-focus listener ****/
     sizePicker.on('pointerenter keyup', function() {    // listen for mouse or keyboard focus on sizePicker form
         const pageWidth = pageBody.width();    // get the current page width
+        console.log(pageWidth);
         const pixelWidth = 20;
         const maxGridWidth = parseInt(pageWidth / pixelWidth);
         const maxGridHeight = parseInt(maxGridWidth * 1.414);    // 1.414 is A4-paper aspect-ratio
@@ -73,6 +79,7 @@ const inputWidth = $('#input_width');
 const inputHeight = $('#input_height');
 const colorPicker = $('#colorPicker');
 const canvasGrid = $('#pixel_canvas');
+const helpTextArea = $('#help_text');
 
 let continuousDrag = false;    //  'continuousDrag' is global, to be available to multiple listeners
 
