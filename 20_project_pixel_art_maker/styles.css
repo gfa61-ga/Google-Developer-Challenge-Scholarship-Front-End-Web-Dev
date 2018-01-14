@@ -37,18 +37,18 @@ td {
 }
 
 td:hover {
-    border-color: #ffccdd;
+    border-color: #fcd;
     border-style: double;
 }
 
-input[type=number] {
+input {
     font-family : inherit;
-    text-align: center;
-    width: 6em;
+    font-weight: bold;
 }
 
-input[type=submit] {
-    font-family : inherit;
+input[type=number] {
+    text-align: center;
+    width: 6em;
 }
 
 input:invalid {

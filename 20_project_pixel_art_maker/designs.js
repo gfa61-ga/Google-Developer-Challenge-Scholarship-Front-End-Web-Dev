@@ -10,8 +10,8 @@
 function makeGrid() {
     const gridHeight = inputHeight.val();
     const gridWidth = inputWidth.val();
-    const helpTextHtml = '<p>Click or Drag to paint</p>' +
-        '<p>Double Click to erase color</p>';
+    const helpTextHtml = '<p><strong> Click </strong> or <strong> Drag </strong> to paint<br>' +
+        '<strong>Double Click </strong> to erase color</p>';
 
     canvasGrid.text('');    // erase previous canvas
     helpTextArea.text('');    // erase helpText
