@@ -10,11 +10,8 @@
 function makeGrid() {
     const gridHeight = inputHeight.val();
     const gridWidth = inputWidth.val();
-    const helpTextHtml = '<p><strong> Click </strong> or <strong> Drag </strong> to paint<br>' +
-        '<strong>Double Click </strong> to erase color</p>';
 
-    canvasGrid.text('');    // erase previous canvas
-    helpTextArea.text('');    // erase helpText
+    canvasGrid.html('');    // erase previous canvas
 
     const canvasTable = canvasGrid.get(0);    // get() function returns the DOM <table> element
     for (let row = 0; row < gridHeight; row++) {
@@ -24,7 +21,7 @@ function makeGrid() {
         }
     }
 
-    helpTextArea.append(helpTextHtml);    // append helpText
+    helpTextArea.show();    // show helpText after grid creation
 }
 
 function addListeners() {
@@ -82,4 +79,5 @@ const helpTextArea = $('#help_text');
 
 let continuousDrag = false;    //  'continuousDrag' is global, to be available to multiple listeners
 
+helpTextArea.hide();    // hide helpText on init
 addListeners();    // add listeners on page startup
