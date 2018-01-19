@@ -63,7 +63,6 @@ function addListeners() {
     /**** sizePicker-focus listener ****/
     sizePicker.on('pointerenter keyup', function() {    // listen for mouse or keyboard focus on sizePicker form
         const pageWidth = pageBody.width();    // get the current page width
-        console.log(pageWidth);
         const pixelWidth = 20;
         const maxGridWidth = parseInt(pageWidth / pixelWidth);
         const maxGridHeight = parseInt(maxGridWidth * 1.414);    // 1.414 is A4-paper aspect-ratio
