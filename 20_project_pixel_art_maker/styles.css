@@ -54,3 +54,7 @@ input[type=number] {
 input:invalid {
     color: red;
 }
+
+#help_text {
+    display: none;
+}

@@ -79,5 +79,4 @@ const helpTextArea = $('#help_text');
 
 let continuousDrag = false;    //  'continuousDrag' is global, to be available to multiple listeners
 
-helpTextArea.hide();    // hide helpText on init
 addListeners();    // add listeners on page startup
