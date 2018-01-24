@@ -6,12 +6,12 @@ You've learned a lot about web development so far. I want you to take a moment t
 
 ---
 
-The new skills I have learned about web development are: 
-  * the basic structure of an HTML5 page 
+The new skills I have learned about web development are:
+  * the basic structure of an HTML5 page
   * how an html page is organized as an HTML tree of elements and their content
   * how to use "MDN web site" and "W3C Markup Validation Service"
   * the right use of a number of html tags, enough to make me able to translate a designer's mockup to html code
-  * the "Markdown" way to format text 
+  * the "Markdown" way to format text
   * the basics about using Git locally, pushing my html code to GitHub and accessing the related page through github.io web server
   * how to use codepen.io
   * that it would be useful for me to enroll in Udacity's "Networking for Web Developers" course and so i did.
@@ -24,7 +24,7 @@ It has been difficult for me:
 
 To overcome challenges so far I have used:
   *  careful studying of the course resources so far
-  * "MDN web site" when i needed to find the right tag for a task 
+  * "MDN web site" when i needed to find the right tag for a task
   *  "F.A.Q - Google Challenge Scholarship: Front-End Web Dev" to learn the basics about this Scholarschip
   *  other users posts on Slack channels and Forum, to find out a way to post my one work for feedback etc.
 

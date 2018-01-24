@@ -33,7 +33,7 @@ tr {
 
 td {
     width: 20px;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 td:hover {
@@ -55,6 +55,6 @@ input:invalid {
     color: red;
 }
 
-#help_text {
+#help_text {    /* hide helpText before grid creation */
     display: none;
 }

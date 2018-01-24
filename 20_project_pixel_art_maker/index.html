@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Pixel Art Maker!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <!-- make page responsive -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin+Sketch">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -24,7 +25,9 @@
     <table id="pixel_canvas"> </table>
 
     <p id="help_text">
-        <strong> Click </strong> or <strong> Drag </strong> to paint<br>
+        <strong> Click </strong>
+            <span id="drag_help_text"> or <strong> Drag </strong></span>
+            to paint<br>
         <strong>Double Click </strong> to erase color
     </p>
 
