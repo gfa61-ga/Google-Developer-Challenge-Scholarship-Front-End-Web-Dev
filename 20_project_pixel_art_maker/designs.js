@@ -76,7 +76,13 @@ const inputHeight = $('#input_height');
 const colorPicker = $('#colorPicker');
 const canvasGrid = $('#pixel_canvas');
 const helpTextArea = $('#help_text');
+const dragHelpText =$('#drag_help_text');
 
 let continuousDrag = false;    //  'continuousDrag' is global, to be available to multiple listeners
 
 addListeners();    // add listeners on page startup
+
+if ("ontouchstart" in document.documentElement)    //  hide DragHelpText on touchable devices
+    {
+        dragHelpText.remove();
+    }
