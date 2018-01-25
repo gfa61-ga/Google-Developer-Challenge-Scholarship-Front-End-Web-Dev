@@ -48,6 +48,7 @@ function addListeners() {
                 eventTarget.style.backgroundColor = colorPicker.val();
                 break;
             case 'dblclick':
+                pixelEvent.preventDefault();    // prevent doubleClick default behavior
                 eventTarget.style.backgroundColor = '#ffffff';    // unpaint the pixel on doubleclick
         }
     });
