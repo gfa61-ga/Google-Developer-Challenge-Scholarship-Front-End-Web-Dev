@@ -4,7 +4,8 @@
 *           1. erase pixel color on doubleclick
 *           2. hold down the mouse button for continuous drawing
 *           3. set max allowed camvas width and height according to the current page length
-*
+*           4. add some basic responsiveness by defining viewport in .html file
+*           5. delete helpText for continuous drawing when the device screen is touchable
 */
 
 function makeGrid() {
@@ -21,7 +22,7 @@ function makeGrid() {
         }
     }
 
-    helpTextArea.show();    // show helpText after grid creation
+    helpTextArea.show();    // show helpText, which is hidden before first grid creation
 }
 
 function addListeners() {
@@ -34,28 +35,20 @@ function addListeners() {
     /**** canvasGrid-pixels listener ****/
     canvasGrid.on('mousedown mousemove click dblclick', 'td', function(pixelEvent) {
         const eventTarget = pixelEvent.target;    // 'eventTarget' is the pixel to be painted
+        const mouseButtonPressed = pixelEvent.buttons;    // mouseButtonPressed will become equal to 1, when left mouse button is pressed
 
+        pixelEvent.preventDefault();    // prevent default mousedown dragging behavior
         switch (pixelEvent.type) {
-            case 'mousedown':
-                continuousDrag = true;    // set continuous dragging
-                pixelEvent.preventDefault();    // prevent default mousedown dragging behavior
-                break;
-            case 'mousemove':    // paint the pixel on continuousDrag state AND mousemove event OR on click event
-                if (!continuousDrag) {
-                    break;
+            case 'mousemove':
+                if (mouseButtonPressed != 1) {
+                    break;    // dont paint if mousemove, but left mouse button is not pressed
                 }
             case 'click':
-                eventTarget.style.backgroundColor = colorPicker.val();
+                eventTarget.style.backgroundColor = colorPicker.val();    // paint the pixels on continuous mouseDraging or on mouse click
                 break;
             case 'dblclick':
-                pixelEvent.preventDefault();    // prevent doubleClick default behavior
                 eventTarget.style.backgroundColor = '#ffffff';    // unpaint the pixel on doubleclick
         }
-    });
-
-    /**** canvasGrid listener ****/
-    canvasGrid.on('mouseup mouseleave', function () {    // cancel continuous dragging
-        continuousDrag = false;
     });
 
     /**** sizePicker-focus listener ****/
@@ -70,6 +63,12 @@ function addListeners() {
     });
 }
 
+function detectTouchable() {
+    if ("ontouchstart" in document.documentElement) {
+        dragHelpText.remove();    // hide DragHelpText on touchable devices, where continuous drawing doesn't work
+    }
+}
+
 const pageBody = $('body');
 const sizePicker = $('#sizePicker');
 const inputWidth = $('#input_width');
@@ -79,11 +78,5 @@ const canvasGrid = $('#pixel_canvas');
 const helpTextArea = $('#help_text');
 const dragHelpText =$('#drag_help_text');
 
-let continuousDrag = false;    //  'continuousDrag' is global, to be available to multiple listeners
-
 addListeners();    // add listeners on page startup
-
-if ("ontouchstart" in document.documentElement)    //  hide DragHelpText on touchable devices
-    {
-        dragHelpText.remove();
-    }
+detectTouchable();    // adjust help text when touchable screen is detected
